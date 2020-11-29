@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">AstroWeather_v2</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="settings_header">Settings</string>
+
+
+    <!-- Settings Preferences -->
+    <string name="Latitude_title">Latitude</string>
+    <string name="Longitude_title">Longitude</string>
+    <string name="Refresh_title">Refresh rate</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>
