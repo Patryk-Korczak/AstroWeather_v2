@@ -12,9 +12,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -70,6 +74,7 @@ public class CurrentWeatherFragment extends Fragment {
                 // Request a string response from the provided URL.
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, myApi.finalUrl,
                         response -> {
+                            PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putString("data", response).apply();
                             Gson gson = new Gson();
                             WeatherData myWeatherData = gson.fromJson(response, WeatherData.class);
                             textTemperature.setText("Temperature: " + String.valueOf(myWeatherData.current.temp) + "C");
@@ -78,7 +83,23 @@ public class CurrentWeatherFragment extends Fragment {
                             textClouds.setText("Clouds: " + String.valueOf(myWeatherData.current.clouds) + "%");
                             textDescription.setText("Description: " + String.valueOf(myWeatherData.current.weather.get(0).description));
                             textWindSpeed.setText("Wind speed: " + String.valueOf(myWeatherData.current.wind_speed) + " km/h");
-                        }, error -> Toast.makeText(getActivity(), "An error occured!", Toast.LENGTH_SHORT));
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error instanceof NetworkError || error instanceof AuthFailureError || error instanceof NoConnectionError || error instanceof TimeoutError) {
+                            Toast.makeText(getContext(), "No internet connection, showing latest data available.", Toast.LENGTH_SHORT).show();
+                            String response = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("data", "");
+                            Gson gson = new Gson();
+                            WeatherData myWeatherData = gson.fromJson(response, WeatherData.class);
+                            textTemperature.setText("Temperature: " + String.valueOf(myWeatherData.current.temp) + "C");
+                            textFeelsLike.setText("Feels like: " + String.valueOf(myWeatherData.current.feels_like) + "C");
+                            textPressure.setText("Pressure: " + String.valueOf(myWeatherData.current.pressure));
+                            textClouds.setText("Clouds: " + String.valueOf(myWeatherData.current.clouds) + "%");
+                            textDescription.setText("Description: " + String.valueOf(myWeatherData.current.weather.get(0).description));
+                            textWindSpeed.setText("Wind speed: " + String.valueOf(myWeatherData.current.wind_speed) + " km/h");
+                        }
+                    }
+                });
 
                 queue.add(stringRequest);
                 mHandler.postDelayed(mTicker, Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getContext()).getString("refresh", "15")) * 60 * 1000);
@@ -112,6 +133,7 @@ public class CurrentWeatherFragment extends Fragment {
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, myApi.finalUrl,
                 response -> {
+                    PreferenceManager.getDefaultSharedPreferences(getContext()).edit().putString("data", response).apply();
                     Gson gson = new Gson();
                     WeatherData myWeatherData = gson.fromJson(response, WeatherData.class);
                     textTemperature.setText("Temperature: " + String.valueOf(myWeatherData.current.temp) + "C");
@@ -120,7 +142,24 @@ public class CurrentWeatherFragment extends Fragment {
                     textClouds.setText("Clouds: " + String.valueOf(myWeatherData.current.clouds) + "%");
                     textDescription.setText("Description: " + String.valueOf(myWeatherData.current.weather.get(0).description));
                     textWindSpeed.setText("Wind speed: " + String.valueOf(myWeatherData.current.wind_speed) + " km/h");
-                }, error -> Toast.makeText(getActivity(), "An error occured!", Toast.LENGTH_SHORT));
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error instanceof NetworkError || error instanceof AuthFailureError || error instanceof NoConnectionError || error instanceof TimeoutError) {
+                    //Toast.makeText(getContext(), "No internet connection, showing latest data available.", Toast.LENGTH_SHORT).show();
+
+                    String response = PreferenceManager.getDefaultSharedPreferences(getContext()).getString("data", "");
+                    Gson gson = new Gson();
+                    WeatherData myWeatherData = gson.fromJson(response, WeatherData.class);
+                    textTemperature.setText("Temperature: " + String.valueOf(myWeatherData.current.temp) + "C");
+                    textFeelsLike.setText("Feels like: " + String.valueOf(myWeatherData.current.feels_like) + "C");
+                    textPressure.setText("Pressure: " + String.valueOf(myWeatherData.current.pressure));
+                    textClouds.setText("Clouds: " + String.valueOf(myWeatherData.current.clouds) + "%");
+                    textDescription.setText("Description: " + String.valueOf(myWeatherData.current.weather.get(0).description));
+                    textWindSpeed.setText("Wind speed: " + String.valueOf(myWeatherData.current.wind_speed) + " km/h");
+                }
+            }
+        });
 
         queue.add(stringRequest);
         mHandler.post(mTicker);

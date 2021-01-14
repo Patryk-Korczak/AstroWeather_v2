@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     Fragment mySunFragment;
     Fragment myMoonFragment;
     Fragment myCurrentWeatherFragment;
+    Fragment myWeatherForecastFragment;
 
     AstroCalculator.Location myAstroLocation;
     AstroCalculator myAstroCalculator;
@@ -66,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             viewPager2Adapter.addFragment(myMoonFragment = new MoonFragment());
             viewPager2Adapter.addFragment(mySunFragment = new SunFragment());
             viewPager2Adapter.addFragment(myCurrentWeatherFragment = new CurrentWeatherFragment());
+            viewPager2Adapter.addFragment(myWeatherForecastFragment = new WeatherForecastFragment());
             myViewPager.setAdapter(viewPager2Adapter);
         } else {
 
@@ -114,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             viewPager2Adapter.addFragment(myMoonFragment = new MoonFragment());
             viewPager2Adapter.addFragment(mySunFragment = new SunFragment());
             viewPager2Adapter.addFragment(myCurrentWeatherFragment = new CurrentWeatherFragment());
+            viewPager2Adapter.addFragment(myWeatherForecastFragment = new WeatherForecastFragment());
             myViewPager.setAdapter(viewPager2Adapter);
         } else {
 
