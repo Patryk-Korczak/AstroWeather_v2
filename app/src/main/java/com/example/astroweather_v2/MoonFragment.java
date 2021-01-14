@@ -21,7 +21,7 @@ public class MoonFragment extends Fragment {
     TextView fullmoon;
     TextView moonphase;
     TextView synodicDay;
-    TextView counter;
+    //TextView counter;
 
     int count = 0;
 
@@ -51,7 +51,7 @@ public class MoonFragment extends Fragment {
         this.fullmoon = view.findViewById(R.id.fullmoon);
         this.moonphase = view.findViewById(R.id.moonphase);
         this.synodicDay = view.findViewById(R.id.synodicDay);
-        this.counter = view.findViewById(R.id.counter);
+        //this.counter = view.findViewById(R.id.counter);
 
         this.latitude2.setText("Latitude: " + String.valueOf(((MainActivity)getActivity()).latitude));
         this.longitude2.setText("Longitude: " + String.valueOf(((MainActivity)getActivity()).longitude));
@@ -61,7 +61,7 @@ public class MoonFragment extends Fragment {
         this.fullmoon.setText("Next full moon: " + String.valueOf(((MainActivity)getActivity()).myAstroCalculator.getMoonInfo().getNextFullMoon()));
         this.moonphase.setText("Moon phase: " + String.valueOf(((MainActivity)getActivity()).myAstroCalculator.getMoonInfo().getIllumination()) + "%");
         this.synodicDay.setText("Synodic day: " + ((MainActivity)getActivity()).myAstroCalculator.getMoonInfo().getAge());
-        this.counter.setText(String.valueOf(count));
+        //this.counter.setText(String.valueOf(count));
 
         mTicker = new Runnable() {
             public void run() {
@@ -74,10 +74,10 @@ public class MoonFragment extends Fragment {
                fullmoon.setText("Next full moon: " + String.valueOf(((MainActivity)getActivity()).myAstroCalculator.getMoonInfo().getNextFullMoon()));
                moonphase.setText("Moon phase: " + Math.floor(((MainActivity)getActivity()).myAstroCalculator.getMoonInfo().getIllumination() * 100) + "%");
                synodicDay.setText("Synodic day: " + ((MainActivity)getActivity()).myAstroCalculator.getMoonInfo().getAge());
-               count++;
-               counter.setText(String.valueOf(count));
+               //count++;
+               //counter.setText(String.valueOf(count));
 
-                mHandler.postDelayed(mTicker, Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getContext()).getString("refresh", "15")) * 1 * 1000);
+                mHandler.postDelayed(mTicker, Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(getContext()).getString("refresh", "15")) * 60 * 1000);
 
             }
         };

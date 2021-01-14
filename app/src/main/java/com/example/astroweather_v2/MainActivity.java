@@ -32,12 +32,14 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     ViewPager2Adapter viewPager2Adapter;
     Fragment mySunFragment;
     Fragment myMoonFragment;
+    Fragment myCurrentWeatherFragment;
 
     AstroCalculator.Location myAstroLocation;
     AstroCalculator myAstroCalculator;
     AstroDateTime myAstroDateTime;
     long deviceTime = System.currentTimeMillis();
     Date myDate = Calendar.getInstance().getTime();
+    WeatherData myWeatherData = null;
 
 
     @Override
@@ -63,6 +65,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             viewPager2Adapter = new ViewPager2Adapter(getSupportFragmentManager(), getLifecycle());
             viewPager2Adapter.addFragment(myMoonFragment = new MoonFragment());
             viewPager2Adapter.addFragment(mySunFragment = new SunFragment());
+            viewPager2Adapter.addFragment(myCurrentWeatherFragment = new CurrentWeatherFragment());
             myViewPager.setAdapter(viewPager2Adapter);
         } else {
 
@@ -110,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
             viewPager2Adapter = new ViewPager2Adapter(getSupportFragmentManager(), getLifecycle());
             viewPager2Adapter.addFragment(myMoonFragment = new MoonFragment());
             viewPager2Adapter.addFragment(mySunFragment = new SunFragment());
+            viewPager2Adapter.addFragment(myCurrentWeatherFragment = new CurrentWeatherFragment());
             myViewPager.setAdapter(viewPager2Adapter);
         } else {
 
@@ -158,4 +162,5 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
 
         this.myAstroCalculator = new AstroCalculator(this.myAstroDateTime, this.myAstroLocation);
     }
+
 }

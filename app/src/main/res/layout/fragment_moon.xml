@@ -10,8 +10,8 @@
 
     <TextView
         android:id="@+id/latitude2"
-        android:layout_width="288dp"
-        android:layout_height="73dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:gravity="center_horizontal|center_vertical"
         android:text="TextView"
         android:textSize="22sp"
@@ -112,15 +112,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/moonphase" />
 
-    <TextView
-        android:id="@+id/counter"
-        android:layout_width="121dp"
-        android:layout_height="71dp"
-        android:gravity="center_horizontal|center_vertical"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/longitude2"
-        app:layout_constraintEnd_toStartOf="@+id/latitude2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
